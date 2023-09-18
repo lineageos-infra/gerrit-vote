@@ -13,6 +13,8 @@ inputs:
     required: false
   verified:
     description: Verified in form of [-1, 0, +1]
+    default: ${{ job.status == 'success' && +1 || -1 }}
+    required: false
   message:
     description: Review message
     default: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
