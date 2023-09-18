@@ -1,0 +1,30 @@
+name: "Vote on gerrit change"
+inputs:
+  auth:
+    description: Gerrit HTTP password credentials in the form of user:password
+  repository:
+    description: Repository name with owner. For example, actions/checkout
+    default: ${{ github.repository }}
+  change:
+    description: Change in the form of 123456
+  ref:
+    description: Change revision SHA
+    default: ${{ github.sha }}
+    required: false
+  code-review:
+    description: Code-Review in form of [-2, -1, 0, +1, +2]
+  message:
+    description: Review message
+    default: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+    required: false
+runs:
+  using: composite
+  steps:
+    - id: gerrit-review
+      shell: bash
+      run: |
+        curl \
+          -H 'Content-Type: application/json; charset=UTF-8' \
+          -u '${{ inputs.auth }}' \
+          -d '{"message": "${{ inputs.message }}", "labels":{"Code-Review": ${{ inputs.code-review }}}}' \
+          https://review.lineageos.org/a/changes/${{ inputs.change }}/revisions/${{ inputs.ref }}/review
