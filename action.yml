@@ -11,8 +11,8 @@ inputs:
     description: Change revision SHA
     default: ${{ github.sha }}
     required: false
-  code-review:
-    description: Code-Review in form of [-2, -1, 0, +1, +2]
+  verified:
+    description: Verified in form of [-1, 0, +1]
   message:
     description: Review message
     default: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
@@ -26,5 +26,5 @@ runs:
         curl \
           -H 'Content-Type: application/json; charset=UTF-8' \
           -u '${{ inputs.auth }}' \
-          -d '{"message": "${{ inputs.message }}", "labels":{"Code-Review": ${{ inputs.code-review }}}}' \
+          -d '{"message": "${{ inputs.message }}", "labels":{"Verified": ${{ inputs.verified }}}}' \
           https://review.lineageos.org/a/changes/${{ inputs.change }}/revisions/${{ inputs.ref }}/review
