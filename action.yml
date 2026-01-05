@@ -28,5 +28,5 @@ runs:
         curl \
           -H 'Content-Type: application/json; charset=UTF-8' \
           -u '${{ inputs.auth }}' \
-          -d '{"message": "${{ inputs.message }}", "labels":{"Verified": ${{ inputs.verified }}}}' \
+          -d '{"message": "${{ inputs.message }}", "labels":{"CI": ${{ inputs.verified }}}}' \
           https://review.lineageos.org/a/changes/${{ inputs.change }}/revisions/${{ inputs.ref }}/review
